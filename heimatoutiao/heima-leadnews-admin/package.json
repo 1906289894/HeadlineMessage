@@ -14,7 +14,7 @@
   "dependencies": {
     "@tinymce/tinymce-vue": "^2.0.0",
     "animate.css": "^3.7.2",
-    "axios": "0.18.0",
+    "axios": "0.18.1",
     "d3": "^5.9.7",
     "echarts": "^4.1.0",
     "element-ui": "^2.4.11",

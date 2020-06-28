@@ -23,7 +23,7 @@
     "js-cookie": "^2.2.0",
     "json-bigint": "^0.3.0",
     "nprogress": "0.2.0",
-    "tinymce": "4.9.1",
+    "tinymce": "4.9.10",
     "vue": "^2.6.5",
     "vue-meta": "^2.0.5",
     "vue-router": "^3.0.1",

@@ -31,4 +31,6 @@ public class HtmlStyle {
     public void setStyleMap(Map<String, String> styleMap) {
         this.styleMap = styleMap;
     }
+
+
 }

@@ -3,6 +3,7 @@ package com.heima.crawler.config;
 import com.heima.crawler.helper.CookieHelper;
 import com.heima.crawler.helper.CrawlerHelper;
 import com.heima.crawler.process.entity.CrawlerConfigProperty;
+import com.heima.crawler.process.scheduler.DbAndRedisScheduler;
 import com.heima.crawler.utils.SeleniumClient;
 import com.heima.model.crawler.core.callback.DataValidateCallBack;
 import com.heima.model.crawler.core.parse.ParseRule;
@@ -11,11 +12,13 @@ import com.heima.model.crawler.enums.CrawlerEnum;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import redis.clients.jedis.JedisPool;
 import us.codecraft.webmagic.Spider;
 
 import java.util.ArrayList;
@@ -172,6 +175,22 @@ public class CrawlerConfig {
             add(new ParseRule("content",CrawlerEnum.ParseRuleType.XPATH,"//div[@id='content_views']/html()"));
         }};
         return parseRules;
+    }
+
+    @Value("${redis.host}")
+    private String redisHost;
+    @Value("${redis.port}")
+    private int reidsPort;
+    @Value("${redis.timeout}")
+    private int reidstimeout;
+    @Value("${redis.password}")
+    private String reidsPassword;
+
+    @Bean
+    public DbAndRedisScheduler getDbAndRedisScheduler() {
+        GenericObjectPoolConfig genericObjectPoolConfig = new GenericObjectPoolConfig();
+        JedisPool jedisPool = new JedisPool(genericObjectPoolConfig, redisHost, reidsPort, reidstimeout, null, 0);
+        return new DbAndRedisScheduler(jedisPool);
     }
 
     private Spider spider;

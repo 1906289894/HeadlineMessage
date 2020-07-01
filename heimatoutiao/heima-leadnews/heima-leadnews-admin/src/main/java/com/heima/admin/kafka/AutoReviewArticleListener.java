@@ -1,6 +1,7 @@
 package com.heima.admin.kafka;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.heima.admin.service.ReviewCrawlerArticleService;
 import com.heima.admin.service.ReviewMediaArticleService;
 import com.heima.common.kafka.KafkaListener;
 import com.heima.common.kafka.KafkaTopicConfig;
@@ -27,6 +28,9 @@ public class AutoReviewArticleListener implements KafkaListener<String,String> {
     @Autowired
     private ReviewMediaArticleService reviewMediaArticleService;
 
+    @Autowired
+    private ReviewCrawlerArticleService reviewCrawlerArticleService;
+
     @Override
     public String topic() {
         return kafkaTopicConfig.getSubmitArticleAuth();
@@ -45,6 +49,16 @@ public class AutoReviewArticleListener implements KafkaListener<String,String> {
                     if(articleId!=null){
                         //审核文章信息
                         reviewMediaArticleService.autoReviewArticleByMedia(articleId);
+                    }
+                }else if (type==SubmitArticleAuto.ArticleType.CRAWLER){
+                    Integer articleId = message.getData().getArticleId();
+                    if (articleId!=null){
+                        //审核文章
+                        try{
+                            reviewCrawlerArticleService.autoReviewArticleByCrawler(articleId);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }

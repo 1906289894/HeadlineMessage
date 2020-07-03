@@ -14,4 +14,8 @@ public class ApHotArticles {
     private Integer articleId;
     private Date releaseDate;
     private Date createdTime;
+    private Integer provinceId;
+    private Integer cityId;
+    private Integer countyId;
+    private Integer isRead;
 }

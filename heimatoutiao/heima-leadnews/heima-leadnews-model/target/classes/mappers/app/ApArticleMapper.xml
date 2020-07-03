@@ -125,5 +125,11 @@
         )
     </insert>
 
+    <select id="loadLastArticleForHot" resultMap="resultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ap_article
+        where publish_time &gt; #{lastDate}
+    </select>
 
 </mapper>

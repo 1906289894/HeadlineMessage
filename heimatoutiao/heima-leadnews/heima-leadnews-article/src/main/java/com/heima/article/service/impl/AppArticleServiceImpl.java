@@ -1,5 +1,6 @@
 package com.heima.article.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.heima.article.service.AppArticleService;
 import com.heima.common.article.constans.ArticleConstans;
 import com.heima.model.article.dtos.ArticleHomeDto;
@@ -7,9 +8,11 @@ import com.heima.model.article.pojos.ApArticle;
 import com.heima.model.common.dtos.ResponseResult;
 import com.heima.model.mappers.app.ApArticleMapper;
 import com.heima.model.mappers.app.ApUserArticleListMapper;
+import com.heima.model.mess.app.ArticleVisitStreamDto;
 import com.heima.model.user.pojos.ApUser;
 import com.heima.model.user.pojos.ApUserArticleList;
 import com.heima.utils.threadlocal.AppThreadLocalUtils;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@Log4j2
 @SuppressWarnings("all")
 public class AppArticleServiceImpl implements AppArticleService {
 
@@ -70,6 +74,14 @@ public class AppArticleServiceImpl implements AppArticleService {
             return ResponseResult.okResult(apArticles);
         }
 
+    }
+
+    @Override
+    public ResponseResult updateArticleView(ArticleVisitStreamDto dto) {
+        int rows = apArticleMapper.updateArticleView(dto.getArticleId(),
+                dto.getView(),dto.getCollect(),dto.getCommont(),dto.getLike());
+        log.info("更新文章阅读数#articleId：{},dto：{}", dto.getArticleId(), JSON.toJSONString(dto),rows);
+        return ResponseResult.okResult(rows);
     }
 
     @Autowired

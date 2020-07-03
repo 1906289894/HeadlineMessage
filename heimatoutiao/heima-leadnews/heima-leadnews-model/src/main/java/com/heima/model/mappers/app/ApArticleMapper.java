@@ -16,4 +16,22 @@ public interface ApArticleMapper {
 
     void insert(ApArticle apArticle);
 
+    /**
+     * 抽取最近的文章数据用于计算热文章
+     *
+     * @param lastDate
+     * @return
+     */
+    List<ApArticle> loadLastArticleForHot(String lastDate);
+    /**
+     * 更新文章数
+     * @param articleId
+     * @param viewCount
+     * @param collectCount
+     * @param commontCount
+     * @param likeCount
+     * @return
+     */
+    int updateArticleView(Integer articleId, long viewCount,long collectCount,long commontCount,long likeCount);
+
 }

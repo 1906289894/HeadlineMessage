@@ -14,4 +14,11 @@ public interface ApAssociateWordsMapper {
      * @return
      */
     List<ApAssociateWords> selectByAssociateWords(@Param("searchWords") String searchWords, @Param("limit") int limit);
+
+    /**
+     * 查询联想词
+     * @return
+     */
+    List<ApAssociateWords> selectAllAssociateWords();
+
 }

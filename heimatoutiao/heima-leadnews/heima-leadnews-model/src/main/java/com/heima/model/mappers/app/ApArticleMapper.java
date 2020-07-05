@@ -34,4 +34,9 @@ public interface ApArticleMapper {
      */
     int updateArticleView(Integer articleId, long viewCount,long collectCount,long commontCount,long likeCount);
 
+    /**
+     * 依靠文章IDS来获取文章详细内容
+     */
+    List<ApArticle> loadArticleListByIdListV2(List<Integer> list);
+
 }

@@ -1,7 +1,9 @@
 package com.heima.common.kafka;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.heima.common.kafka.messages.ApHotArticleMessage;
 import com.heima.common.kafka.messages.SubmitArticleAuthMessage;
+import com.heima.model.article.pojos.ApHotArticles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,7 @@ public class KafkaSender {
         }
     }
 
+
     /**
      * 发送一个不包装的消息
      * 只能是内部使用，拒绝业务上使用
@@ -61,5 +64,14 @@ public class KafkaSender {
 
     public void sendArticleUpdateBus(KafkaMessage message){
         this.sendMesssage(kafkaTopicConfig.getArticleUpdateBus(),UUID.randomUUID().toString(),message);
+    }
+
+    /**
+     * 发送消息处理热文章消息
+     */
+    public void sendHotArticleMessage(ApHotArticles message){
+        ApHotArticleMessage temp = new ApHotArticleMessage();
+        temp.setData(message);
+        this.sendMesssage(kafkaTopicConfig.getHotArticle(),UUID.randomUUID().toString(),temp);
     }
 }

@@ -140,4 +140,15 @@
     likes = GREATEST(IFNULL(likes,0) + #{likeCount}, #{likeCount})
     WHERE id=#{articleId}
     </update>
+
+    <!-- 以及文章IDS列表获取文章数据V2 -->
+    <select id="loadArticleListByIdListV2" resultMap="resultMap">
+        select * from ap_article where id in(
+        <trim prefix="" suffixOverrides=",">
+            <foreach item="item" collection="list" separator=",">
+                #{item}
+            </foreach>
+        </trim>
+        )
+    </select>
 </mapper>

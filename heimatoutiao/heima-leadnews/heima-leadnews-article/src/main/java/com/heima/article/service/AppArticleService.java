@@ -19,4 +19,12 @@ public interface AppArticleService {
      * @return
      */
     ResponseResult updateArticleView(ArticleVisitStreamDto dto);
+
+    /**
+     * 加载文章列表数据
+     * @param type 1 加载更多  2 加载更新
+     * @param dto 封装数据
+     * @return 数据列表
+     */
+    ResponseResult loadV2(Short type, ArticleHomeDto dto, boolean firstPage);
 }
